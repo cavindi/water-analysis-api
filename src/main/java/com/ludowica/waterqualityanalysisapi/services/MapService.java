@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 public class MapService {
@@ -38,7 +42,7 @@ public class MapService {
     }
 
 
-    public JsonArray prepareFeatures(List<WaterInfo> waterInfoList) {
+    private JsonArray prepareFeatures(List<WaterInfo> waterInfoList) {
 
         JsonArray waterInfoJsonArray = new JsonArray();
 
@@ -53,6 +57,7 @@ public class MapService {
 
             attributes.addProperty("name", waterInfo.getLocation().getName());
             attributes.addProperty("id", waterInfo.getId());
+            attributes.addProperty("date", waterInfo.getDate().toString());
             attributes.addProperty("longitude", waterInfo.getLocation().getLongitude());
             attributes.addProperty("latitude", waterInfo.getLocation().getLatitude());
 
@@ -66,7 +71,7 @@ public class MapService {
     }
 
 
-    public void addFeatures(JsonArray waterInfoJsonArray) {
+    private void addFeatures(JsonArray waterInfoJsonArray) {
 
         String url = "https://services6.arcgis.com/" + orgId + "/ArcGIS/rest/services/" + mapName + "/FeatureServer/0/applyEdits";
 
