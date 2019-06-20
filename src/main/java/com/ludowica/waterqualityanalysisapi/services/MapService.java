@@ -50,10 +50,13 @@ public class MapService {
 
             JsonObject json = new JsonObject();
             JsonObject geometry = new JsonObject();
+            JsonObject spatialReference = new JsonObject();
             JsonObject attributes = new JsonObject();
 
             geometry.addProperty("x", waterInfo.getLocation().getLongitude());
             geometry.addProperty("y", waterInfo.getLocation().getLatitude());
+
+            spatialReference.addProperty("wkid", 4326);
 
             attributes.addProperty("name", waterInfo.getLocation().getName());
             attributes.addProperty("id", waterInfo.getId());
@@ -61,6 +64,7 @@ public class MapService {
             attributes.addProperty("longitude", waterInfo.getLocation().getLongitude());
             attributes.addProperty("latitude", waterInfo.getLocation().getLatitude());
 
+            geometry.add("spatialReference", spatialReference);
             json.add("geometry", geometry);
             json.add("attributes", attributes);
 
