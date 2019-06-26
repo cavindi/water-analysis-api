@@ -31,10 +31,10 @@ public class WorkbookService {
         }
 
         if (file.exists()) {
-            System.out.println("pop");
+            System.out.println("File exists");
             populateData(file);
         } else {
-            System.out.println("err");
+            System.out.println("File doesn't exist");
         }
 
     }
@@ -64,15 +64,26 @@ public class WorkbookService {
                 String cellCity = dataFormatter.formatCellValue(row.getCell(2));
                 String cellLocation = dataFormatter.formatCellValue(row.getCell(3));
                 String cellDate = dataFormatter.formatCellValue(row.getCell(4));
-                String cellHW = dataFormatter.formatCellValue(row.getCell(5));
-                String cellRCI = dataFormatter.formatCellValue(row.getCell(6));
+                String cellRCL = dataFormatter.formatCellValue(row.getCell(5));
+                String cellColiform = dataFormatter.formatCellValue(row.getCell(6));
+                String cellEColi = dataFormatter.formatCellValue(row.getCell(7));
+                String cellColour = dataFormatter.formatCellValue(row.getCell(8));
+                String cellTurbidity = dataFormatter.formatCellValue(row.getCell(9));
+                String cellPH = dataFormatter.formatCellValue(row.getCell(10));
+                String cellEC = dataFormatter.formatCellValue(row.getCell(11));
 
                 Location location = getLocation(cellLocation);
                 location.setName(cellLocation);
                 location.setCity(cellCity);
 
-                waterInfo.setHW(Double.parseDouble(cellHW));
-                waterInfo.setRCI(Double.parseDouble(cellHW));
+                waterInfo.setRCL(Double.parseDouble(cellRCL));
+                waterInfo.setColiform(Double.parseDouble(cellColiform));
+                waterInfo.seteColi(Double.parseDouble(cellEColi));
+                waterInfo.setColour(Double.parseDouble(cellColour));
+                waterInfo.setTurbidity(Double.parseDouble(cellTurbidity));
+                waterInfo.setpH(Double.parseDouble(cellPH));
+                waterInfo.setEC(Double.parseDouble(cellEC));
+
                 waterInfo.setLocation(location);
 
                 if (location.getLatitude() != 0.0 && location.getLongitude() != 0.0) {

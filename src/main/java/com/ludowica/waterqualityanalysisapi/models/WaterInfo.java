@@ -21,8 +21,13 @@ public class WaterInfo {
     @JsonIgnoreProperties("waterInfoSet")
     private Location location;
 
-    private double HW;
-    private double RCI;
+    private double RCL;
+    private double coliform;
+    private double eColi;
+    private double colour;
+    private double turbidity;
+    private double pH;
+    private double EC;
 
     public int getId() {
         return id;
@@ -48,20 +53,59 @@ public class WaterInfo {
         this.location = location;
     }
 
-    public double getHW() {
-        return HW;
+    public double getRCL() {
+        return RCL;
     }
 
-    public void setHW(double HW) {
-        this.HW = HW;
+    public void setRCL(double RCL) {
+        this.RCL = RCL;
     }
 
-    public double getRCI() {
-        return RCI;
+    public double getColiform() {
+        return coliform;
     }
 
-    public void setRCI(double RCI) {
-        this.RCI = RCI;
+    public void setColiform(double coliform) {
+        this.coliform = coliform;
     }
 
+    public double geteColi() {
+        return eColi;
+    }
+
+    public void seteColi(double eColi) {
+        this.eColi = eColi;
+    }
+
+    public double getColour() {
+        return colour;
+    }
+
+    public void setColour(double colour) {
+        this.colour = colour;
+    }
+
+    public double getTurbidity() {
+        return turbidity;
+    }
+
+    public void setTurbidity(double turbidity) {
+        this.turbidity = turbidity;
+    }
+
+    public double getpH() {
+        return pH;
+    }
+
+    public void setpH(double pH) {
+        this.pH = pH;
+    }
+
+    public double getEC() {
+        return EC;
+    }
+
+    public void setEC(double EC) {
+        this.EC = EC;
+    }
 }
