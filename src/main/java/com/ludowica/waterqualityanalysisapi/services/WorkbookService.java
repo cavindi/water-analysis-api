@@ -87,13 +87,10 @@ public class WorkbookService {
                 waterInfo.setLocation(location);
 
                 if (location.getLatitude() != 0.0 && location.getLongitude() != 0.0) {
-
                     waterInfoService.addFromWorkBook(waterInfo);
-
                 } else {
                     System.out.println("Not Found " + location.getName());
                 }
-
             }
 
         }
