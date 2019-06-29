@@ -43,4 +43,9 @@ public class WaterInfoController {
         WaterInfo savedWaterInfo = repo.save(waterInfo);
         return new ResponseEntity<>(savedWaterInfo, HttpStatus.OK);
     }
+
+    @GetMapping("/order-by-date")
+    public List<WaterInfo> orderByDate(){
+        return repo.findAllByOrderByDateAsc();
+    }
 }
