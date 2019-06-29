@@ -18,6 +18,7 @@ public class Location {
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("location")
+    @OrderBy("date ASC")
     private Set<WaterInfo> waterInfoSet;
 
     public int getId() {
