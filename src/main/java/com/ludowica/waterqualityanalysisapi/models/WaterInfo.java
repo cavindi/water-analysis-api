@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -28,6 +31,10 @@ public class WaterInfo {
     private double turbidity;
     private double pH;
     private double EC;
+
+    public WaterInfo() {
+        this.date = getCurrentDate();
+    }
 
     public int getId() {
         return id;
@@ -107,5 +114,23 @@ public class WaterInfo {
 
     public void setEC(double EC) {
         this.EC = EC;
+    }
+
+    private Date getCurrentDate() {
+
+        Date date = new Date();
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+
+        String strDate = df.format(date);
+
+        Date newDate = null;
+        try {
+            newDate = df.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return newDate;
     }
 }

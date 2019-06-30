@@ -21,7 +21,7 @@ public class WaterInfoService {
     MapService mapService;
 
     public WaterInfo addOrUpdate(WaterInfo waterInfo) {
-        waterInfo.setDate(retrieveDate());
+        //waterInfo.setDate(retrieveDate());
         return waterInfoRepo.save(waterInfo);
     }
 
@@ -39,7 +39,7 @@ public class WaterInfoService {
     }
 
 
-    private Date retrieveDate() {
+/*    private Date retrieveDate() {
 
         Date date = new Date();
 
@@ -54,5 +54,5 @@ public class WaterInfoService {
         }
 
         return newDate;
-    }
+    }*/
 }
