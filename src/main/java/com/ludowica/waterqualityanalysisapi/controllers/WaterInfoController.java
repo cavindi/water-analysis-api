@@ -40,7 +40,7 @@ public class WaterInfoController {
 
     @PostMapping
     public ResponseEntity<?> addOrUpdate(@RequestBody WaterInfo waterInfo) {
-        WaterInfo savedWaterInfo = repo.save(waterInfo);
+        WaterInfo savedWaterInfo = waterInfoService.addOrUpdate(waterInfo);
         return new ResponseEntity<>(savedWaterInfo, HttpStatus.OK);
     }
 
