@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/water-info")
@@ -20,11 +21,11 @@ public class WaterInfoController {
     @Autowired
     WaterInfoService waterInfoService;
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> get(@PathVariable int id) {
-//        ShoppingCart shoppingCart = checkoutService.doCheckOut(id);
-//        return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable int id) {
+        Optional<WaterInfo> waterInfo = repo.findById(id);
+       return new ResponseEntity<>(waterInfo, HttpStatus.OK);
+   }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
