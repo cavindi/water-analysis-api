@@ -1,5 +1,6 @@
 package com.ludowica.waterqualityanalysisapi.services;
 
+import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
@@ -41,7 +42,9 @@ public class WaterInfoService {
     }
 
     public ChartColumn getChartColumn(ChartColumnFilter chartColumnFilter) {
-        List<WaterInfo> waterInfoList = waterInfoRepo.findAllByLocationCityAndDateBetween(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd());
+        List<WaterInfo> waterInfoList = waterInfoRepo.
+                findAllByLocationCityAndDateBetween(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd())
+                .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartColumnFilter.getCity()));
 
         int total = waterInfoList.size();
         ChartColumn chartColumn = new ChartColumn();

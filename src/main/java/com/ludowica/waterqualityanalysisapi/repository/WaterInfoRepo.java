@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WaterInfoRepo extends JpaRepository<WaterInfo, Integer> {
-    List<WaterInfo> findAllByOrderByDateAsc();
-    List<WaterInfo> findAllByLocationCityAndDateBetween(String locationCity, Date start, Date end);
+    Optional<List<WaterInfo>> findAllByLocationCityAndDateBetween(String locationCity, Date start, Date end);
 }
