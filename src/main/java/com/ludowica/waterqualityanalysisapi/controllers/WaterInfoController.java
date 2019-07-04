@@ -1,5 +1,6 @@
 package com.ludowica.waterqualityanalysisapi.controllers;
 
+import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
 import com.ludowica.waterqualityanalysisapi.services.WaterInfoService;
@@ -45,8 +46,9 @@ public class WaterInfoController {
         return new ResponseEntity<>(savedWaterInfo, HttpStatus.OK);
     }
 
-    @GetMapping("/order-by-date")
-    public List<WaterInfo> orderByDate(){
-        return repo.findAllByOrderByDateAsc();
+
+    @PostMapping("/find-by-city-and-date")
+    public List<WaterInfo> findByCityAndDate(@RequestBody ChartColumnFilter chartColumnFilter){
+        return repo.findAllByLocationCityAndDateBetween(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd());
     }
 }
