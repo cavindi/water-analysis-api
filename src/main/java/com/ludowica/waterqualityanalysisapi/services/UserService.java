@@ -1,15 +1,23 @@
 package com.ludowica.waterqualityanalysisapi.services;
 
+import com.ludowica.waterqualityanalysisapi.models.Role;
+import com.ludowica.waterqualityanalysisapi.models.RoleName;
+import com.ludowica.waterqualityanalysisapi.models.User;
+import com.ludowica.waterqualityanalysisapi.models.UserSignUp;
 import com.ludowica.waterqualityanalysisapi.repository.RoleRepo;
 import com.ludowica.waterqualityanalysisapi.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserService {
 
-    /*@Autowired
-    PasswordEncoder encoder;*/
+    @Autowired
+    PasswordEncoder encoder;
 
     @Autowired
     UserRepo userRepo;
@@ -17,45 +25,39 @@ public class UserService {
     @Autowired
     RoleRepo roleRepo;
 
-    /*public void createUser(UserSignUp userSignUp) {
+    public void createUser(UserSignUp userSignUp) {
 
 
-        User user = new User(
-                userSignUp.getName(),
-                userSignUp.getUsername(),
-                userSignUp.getEmail(),
-                encoder.encode(userSignUp.getPassword()));
+        User user = new User(userSignUp.getName(), userSignUp.getUsername(), userSignUp.getEmail(), encoder.encode(userSignUp.getPassword()));
         Set<String> strRoles = userSignUp.getRole();
         Set<Role> roles = new HashSet<>();
 
-        strRoles.forEach(role -> {
+        if (strRoles != null) {
 
-            switch (role) {
-                case "admin":
-                    Role adminRole = roleRepo.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("User role not found"));
-                    roles.add(adminRole);
-                    break;
-                case "mm":
-                    Role mmRole = roleRepo.findByName(RoleName.ROLE_MM).orElseThrow(() -> new RuntimeException("User role not found"));
-                    roles.add(mmRole);
-                    break;
-                case "mc":
-                    Role mcRole = roleRepo.findByName(RoleName.ROLE_MC).orElseThrow(() -> new RuntimeException("User role not found"));
-                    roles.add(mcRole);
-                    break;
-                case "supplier":
-                    Role supplierRole = roleRepo.findByName(RoleName.ROLE_SUPPLIER).orElseThrow(() -> new RuntimeException("User role not found"));
-                    roles.add(supplierRole);
-                    break;
-                case "external":
-                    Role externalRole = roleRepo.findByName(RoleName.ROLE_EXTERNAL).orElseThrow(() -> new RuntimeException("User role not found"));
-                    roles.add(externalRole);
-                    break;
-            }
-        });
+            strRoles.forEach(role -> {
+
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepo.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("User role not found"));
+                        roles.add(adminRole);
+                        break;
+//                case "customer":
+//                    Role userRole = roleRepo.findByName(RoleName.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("User role not found"));
+//                    roles.add(userRole);
+//                    break;
+                }
+            });
+
+        }
 
         user.setRoles(roles);
         userRepo.save(user);
 
-    }*/
+    }
+
+    public User updateUser(User user) {
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        return userRepo.save(user);
+    }
 }
