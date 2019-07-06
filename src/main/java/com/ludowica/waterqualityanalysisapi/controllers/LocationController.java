@@ -33,4 +33,5 @@ public class LocationController {
     public Location addOrUpdate(@RequestBody Location location){
         return locationService.addOrUpdate(location);
     }
+
 }

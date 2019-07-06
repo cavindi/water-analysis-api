@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ludowica.waterqualityanalysisapi.models.Location;
-import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,8 +11,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Service
 public class LocationService {
@@ -38,7 +35,8 @@ public class LocationService {
     private String accessToken = null;
 
     public Location addOrUpdate(Location location) {
-        Location savedLocation =  locationRepo.save(location);
+        Location resultLocation = getLatLong(location);
+        Location savedLocation =  locationRepo.save(resultLocation);
         prepareForArcGIS(savedLocation);
         return savedLocation;
     }
@@ -122,6 +120,4 @@ public class LocationService {
 
         return json;
     }
-
-
 }
