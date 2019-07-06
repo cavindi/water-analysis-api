@@ -77,8 +77,6 @@ public class WorkbookService {
                 location.setCity(cellCity);
 
                 waterInfo.setRCL(Double.parseDouble(cellRCL));
-                waterInfo.setColiform(Double.parseDouble(cellColiform));
-                waterInfo.seteColi(Double.parseDouble(cellEColi));
                 waterInfo.setColour(Double.parseDouble(cellColour));
                 waterInfo.setTurbidity(Double.parseDouble(cellTurbidity));
                 waterInfo.setpH(Double.parseDouble(cellPH));
