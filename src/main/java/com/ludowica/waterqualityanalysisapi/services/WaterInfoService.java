@@ -90,6 +90,53 @@ public class WaterInfoService {
         return chartColumn;
     }
 
+    public double calculateWaterQuality(ChartColumnFilter filter){
+        List<WaterInfo> list = waterInfoRepo.
+                findAllByLocationCityAndDateBetween(filter.getCity(), filter.getDateStart(), filter.getDateEnd())
+                .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + filter.getCity()));
+
+        int total = list.size();
+        ChartColumn chartColumn = new ChartColumn();
+
+        for (WaterInfo waterInfo : list) {
+
+            if (6.5 <= waterInfo.getpH() && waterInfo.getpH() <= 8.5) {
+                double current = chartColumn.getpH();
+                current++;
+                chartColumn.setpH(current);
+            }
+
+            if (waterInfo.getColour() <= 15) {
+                double current = chartColumn.getColour();
+                current++;
+                chartColumn.setColour(current);
+            }
+
+            if (waterInfo.getTurbidity() <= 2) {
+                double current = chartColumn.getTurbidity();
+                current++;
+                chartColumn.setTurbidity(current);
+            }
+
+            if (waterInfo.getRCL() <= 1) {
+                double current = chartColumn.getRCL();
+                current++;
+                chartColumn.setRCL(current);
+            }
+
+        }
+
+        double ph = (chartColumn.getpH() / total) * 100;
+        double colour = (chartColumn.getColour() / total) * 100;
+        double turbidity = (chartColumn.getTurbidity() / total) * 100;
+        double rcl = (chartColumn.getRCL() / total) * 100;
+
+        double waterQuality = (ph + colour + turbidity + rcl)/4;
+
+        return waterQuality;
+
+    }
+
     private Date retrieveDate() {
 
         Date date = new Date();

@@ -53,4 +53,11 @@ public class WaterInfoController {
         ChartColumn chartColumn = waterInfoService.getChartColumn(chartColumnFilter);
         return new ResponseEntity<>(chartColumn, HttpStatus.OK);
     }
+
+    @PostMapping("/water-quality")
+    public ResponseEntity<Double> calcWaterQuality(@RequestBody ChartColumnFilter filter){
+        double column = waterInfoService.calculateWaterQuality(filter);
+        return new ResponseEntity<Double>(column, HttpStatus.OK);
+    }
+
 }
