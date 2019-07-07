@@ -65,16 +65,20 @@ public class WorkbookService {
                 String cellLocation = dataFormatter.formatCellValue(row.getCell(3));
                 String cellDate = dataFormatter.formatCellValue(row.getCell(4));
                 String cellRCL = dataFormatter.formatCellValue(row.getCell(5));
-                String cellColour = dataFormatter.formatCellValue(row.getCell(6));
-                String cellTurbidity = dataFormatter.formatCellValue(row.getCell(7));
-                String cellPH = dataFormatter.formatCellValue(row.getCell(8));
-                String cellEC = dataFormatter.formatCellValue(row.getCell(9));
+                String cellColiform = dataFormatter.formatCellValue(row.getCell(6));
+                String cellEColi = dataFormatter.formatCellValue(row.getCell(7));
+                String cellColour = dataFormatter.formatCellValue(row.getCell(8));
+                String cellTurbidity = dataFormatter.formatCellValue(row.getCell(9));
+                String cellPH = dataFormatter.formatCellValue(row.getCell(10));
+                String cellEC = dataFormatter.formatCellValue(row.getCell(11));
 
                 Location location = getLocation(cellLocation);
                 location.setName(cellLocation);
                 location.setCity(cellCity);
 
                 waterInfo.setRCL(Double.parseDouble(cellRCL));
+                waterInfo.setColiform(Double.parseDouble(cellColiform));
+                waterInfo.seteColi(Double.parseDouble(cellEColi));
                 waterInfo.setColour(Double.parseDouble(cellColour));
                 waterInfo.setTurbidity(Double.parseDouble(cellTurbidity));
                 waterInfo.setpH(Double.parseDouble(cellPH));

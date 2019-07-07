@@ -25,6 +25,8 @@ public class WaterInfo {
     private Location location;
 
     private double RCL;
+    private double coliform;
+    private double eColi;
     private double colour;
     private double turbidity;
     private double pH;
@@ -64,6 +66,22 @@ public class WaterInfo {
 
     public void setRCL(double RCL) {
         this.RCL = RCL;
+    }
+
+    public double getColiform() {
+        return coliform;
+    }
+
+    public void setColiform(double coliform) {
+        this.coliform = coliform;
+    }
+
+    public double geteColi() {
+        return eColi;
+    }
+
+    public void seteColi(double eColi) {
+        this.eColi = eColi;
     }
 
     public double getColour() {
