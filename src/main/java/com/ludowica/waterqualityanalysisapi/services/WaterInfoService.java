@@ -94,7 +94,8 @@ public class WaterInfoService {
         return chartColumn;
     }
 
-    public double calculateWaterQuality(ChartColumnFilter filter){
+    public double calculateWaterQuality(ChartColumnFilter filter) {
+
         List<WaterInfo> list = waterInfoRepo.
                 findAllByLocationCityAndDateBetween(filter.getCity(), filter.getDateStart(), filter.getDateEnd())
                 .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + filter.getCity()));
@@ -134,13 +135,12 @@ public class WaterInfoService {
         double turbidity = (chartColumn.getTurbidity() / total) * 100;
         double rcl = (chartColumn.getRCL() / total) * 100;
 
-        double waterQuality = (ph + colour + turbidity + rcl)/4;
+        double waterQuality = (ph + colour + turbidity + rcl) / 4;
 
         return waterQuality;
-
     }
 
-    public void getChartWaterQuality(ChartColumnFilter filter){
+    public void getChartWaterQuality(ChartColumnFilter filter) {
 
     }
 

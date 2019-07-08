@@ -3,7 +3,12 @@ package com.ludowica.waterqualityanalysisapi.services;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
+import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
+import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
+import com.ludowica.waterqualityanalysisapi.forms.ChartWaterQuality;
 import com.ludowica.waterqualityanalysisapi.models.Location;
+import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,7 +43,7 @@ public class LocationService {
     private String accessToken = null;
 
     public Location addOrUpdate(Location location) {
-        Location savedLocation =  locationRepo.save(location);
+        Location savedLocation = locationRepo.save(location);
         prepareForArcGIS(savedLocation);
         return savedLocation;
     }
@@ -66,7 +72,7 @@ public class LocationService {
         return location;
     }
 
-    private void prepareForArcGIS(Location location){
+    private void prepareForArcGIS(Location location) {
         accessToken = arcGISAuthService.getAccessToken();
         JsonObject json = prepareLocation(location);
         addToArcGIS(json);
@@ -122,8 +128,40 @@ public class LocationService {
         return json;
     }
 
-    public void getWaterQualityByLocation(List<Location> locationList){
+    public List<ChartWaterQuality> getWaterQualityByLocation(ChartColumnFilter chartColumnFilter) {
 
+        List<Location> locationList = locationRepo
+                .findByCityAndDate(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd())
+                .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartColumnFilter.getCity()));
+
+        List<ChartWaterQuality> chartWaterQualityList = new ArrayList<>();
+
+        for (Location location : locationList) {
+
+            ChartWaterQuality chartWaterQuality = new ChartWaterQuality();
+            double isGoodCounter = 0;
+
+            for (WaterInfo waterInfo : location.getWaterInfoSet()) {
+
+                if (6.5 <= waterInfo.getpH() && waterInfo.getpH() <= 8.5 &&
+                        waterInfo.getColour() <= 15 &&
+                        waterInfo.getTurbidity() <= 2 &&
+                        waterInfo.getRCL() <= 1
+                ) {
+
+                    isGoodCounter++;
+                }
+            }
+
+            double result = (isGoodCounter / location.getWaterInfoSet().size()) * 100;
+
+            chartWaterQuality.setName(location.getName());
+            chartWaterQuality.setPercentage(result);
+
+            chartWaterQualityList.add(chartWaterQuality);
+        }
+
+        return chartWaterQualityList;
     }
 
 
