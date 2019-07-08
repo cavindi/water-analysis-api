@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ludowica.waterqualityanalysisapi.models.Location;
-import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -121,6 +120,10 @@ public class LocationService {
         json.add("attributes", attributes);
 
         return json;
+    }
+
+    public void getWaterQualityByLocation(List<Location> locationList){
+
     }
 
 

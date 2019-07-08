@@ -140,7 +140,7 @@ public class WaterInfoService {
 
     }
 
-    public void populateChartWQ(ChartColumnFilter filter){
+    public void getChartWaterQuality(ChartColumnFilter filter){
 
     }
 
