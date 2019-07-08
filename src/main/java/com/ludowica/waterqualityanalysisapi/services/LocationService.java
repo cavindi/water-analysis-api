@@ -32,7 +32,7 @@ public class LocationService {
 
     @Autowired
     ArcGISAuthService arcGISAuthService;
-    
+
 
     @Value("${esri.arcgis.org-id}")
     private String orgId;
