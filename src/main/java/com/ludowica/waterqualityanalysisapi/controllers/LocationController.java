@@ -1,5 +1,6 @@
 package com.ludowica.waterqualityanalysisapi.controllers;
 
+import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.models.Location;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import com.ludowica.waterqualityanalysisapi.services.LocationService;
@@ -32,5 +33,10 @@ public class LocationController {
     @PostMapping
     public Location addOrUpdate(@RequestBody Location location){
         return locationService.addOrUpdate(location);
+    }
+
+    @PostMapping("/city-data")
+    public List<Location> getCityData(@RequestBody ChartColumnFilter chartColumnFilter){
+        return locationRepo.findByCityAndDate(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd());
     }
 }

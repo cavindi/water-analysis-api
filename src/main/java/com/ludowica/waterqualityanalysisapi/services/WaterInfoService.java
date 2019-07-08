@@ -4,6 +4,7 @@ import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
+import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class WaterInfoService {
 
     @Autowired
     WaterInfoRepo waterInfoRepo;
+
+    @Autowired
+    LocationRepo locationRepo;
 
     @Autowired
     MapService mapService;
@@ -123,7 +127,6 @@ public class WaterInfoService {
                 current++;
                 chartColumn.setRCL(current);
             }
-
         }
 
         double ph = (chartColumn.getpH() / total) * 100;
@@ -134,6 +137,10 @@ public class WaterInfoService {
         double waterQuality = (ph + colour + turbidity + rcl)/4;
 
         return waterQuality;
+
+    }
+
+    public void populateChartWQ(ChartColumnFilter filter){
 
     }
 
