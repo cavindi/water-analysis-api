@@ -23,6 +23,7 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+
     @GetMapping
     public List<Location> getAllLocations() {
         return locationRepo.findAll();

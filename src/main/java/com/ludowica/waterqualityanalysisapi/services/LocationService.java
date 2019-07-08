@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
-import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.forms.ChartWaterQuality;
 import com.ludowica.waterqualityanalysisapi.models.Location;
@@ -33,6 +32,7 @@ public class LocationService {
 
     @Autowired
     ArcGISAuthService arcGISAuthService;
+    
 
     @Value("${esri.arcgis.org-id}")
     private String orgId;
