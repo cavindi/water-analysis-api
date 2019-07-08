@@ -2,6 +2,7 @@ package com.ludowica.waterqualityanalysisapi.controllers;
 
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
+import com.ludowica.waterqualityanalysisapi.forms.ChartPie;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
 import com.ludowica.waterqualityanalysisapi.services.WaterInfoService;
@@ -54,10 +55,18 @@ public class WaterInfoController {
         return new ResponseEntity<>(chartColumn, HttpStatus.OK);
     }
 
+    @PostMapping("/chart-pie")
+    public ResponseEntity<?> createPieChart(@RequestBody ChartColumnFilter chartColumnFilter) {
+        ChartPie chartPie = waterInfoService.getChartPie(chartColumnFilter);
+        return new ResponseEntity<>(chartPie, HttpStatus.OK);
+    }
+
     @PostMapping("/water-quality")
     public ResponseEntity<Double> calcWaterQuality(@RequestBody ChartColumnFilter filter){
         double column = waterInfoService.calculateWaterQuality(filter);
         return new ResponseEntity<Double>(column, HttpStatus.OK);
     }
+
+
 
 }

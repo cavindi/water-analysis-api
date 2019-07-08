@@ -3,6 +3,7 @@ package com.ludowica.waterqualityanalysisapi.services;
 import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
+import com.ludowica.waterqualityanalysisapi.forms.ChartPie;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
@@ -140,8 +141,53 @@ public class WaterInfoService {
         return waterQuality;
     }
 
-    public void getChartWaterQuality(ChartColumnFilter filter) {
+    public ChartPie getChartPie(ChartColumnFilter chartFilter) {
+        List<WaterInfo> waterInfoList = waterInfoRepo.
+                findAllByLocationCityAndDateBetween(chartFilter.getCity(), chartFilter.getDateStart(), chartFilter.getDateEnd())
+                .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartFilter.getCity()));
 
+        int total = waterInfoList.size();
+        ChartPie chartPie = new ChartPie();
+
+        for (WaterInfo waterInfo : waterInfoList) {
+
+            if (6.5 <= waterInfo.getpH() && waterInfo.getpH() <= 8.5) {
+                double current = chartPie.getpH();
+                current++;
+                chartPie.setpH(current);
+            }
+
+            if (waterInfo.getColour() <= 15) {
+                double current = chartPie.getColour();
+                current++;
+                chartPie.setColour(current);
+            }
+
+            if (waterInfo.getTurbidity() <= 2) {
+                double current = chartPie.getTurbidity();
+                current++;
+                chartPie.setTurbidity(current);
+            }
+
+            if (waterInfo.getRCL() <= 1) {
+                double current = chartPie.getRCL();
+                current++;
+                chartPie.setRCL(current);
+            }
+        }
+
+        double ph = chartPie.getpH();
+        double colour = chartPie.getColour();
+        double turbidity = chartPie.getTurbidity();
+        double rcl = chartPie.getRCL();
+
+        chartPie.setpH(ph);
+        chartPie.setColour(colour);
+        chartPie.setTurbidity(turbidity);
+        chartPie.setRCL(rcl);
+        chartPie.setTotal(total);
+
+        return chartPie;
     }
 
     private Date retrieveDate() {
