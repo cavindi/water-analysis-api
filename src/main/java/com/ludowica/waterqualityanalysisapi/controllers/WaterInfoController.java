@@ -62,11 +62,16 @@ public class WaterInfoController {
     }
 
     @PostMapping("/water-quality")
-    public ResponseEntity<Double> calcWaterQuality(@RequestBody ChartColumnFilter filter){
+    public ResponseEntity<?> calcWaterQuality(@RequestBody ChartColumnFilter filter) {
         double column = waterInfoService.calculateWaterQuality(filter);
-        return new ResponseEntity<Double>(column, HttpStatus.OK);
+        return new ResponseEntity<>(column, HttpStatus.OK);
     }
 
+    @PostMapping("/water-quality-list")
+    public ResponseEntity<?> findWaterInfoByDateAndCity(@RequestBody ChartColumnFilter filter) {
+        List<WaterInfo> waterInfoList = waterInfoService.getWaterInfoByDateAndCity(filter);
+        return new ResponseEntity<>(waterInfoList, HttpStatus.OK);
+    }
 
 
 }

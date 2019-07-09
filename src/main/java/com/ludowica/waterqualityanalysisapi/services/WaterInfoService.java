@@ -195,7 +195,8 @@ public class WaterInfoService {
         List<WaterInfo> waterInfoList = waterInfoRepo.
                 findAllByLocationCityAndDateBetween(chartColumnFilter.getCity(), chartColumnFilter.getDateStart(), chartColumnFilter.getDateEnd())
                 .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartColumnFilter.getCity()));
-        
+
+
         return waterInfoList;
     }
 
