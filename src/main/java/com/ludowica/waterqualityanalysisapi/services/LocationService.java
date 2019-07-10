@@ -26,13 +26,11 @@ public class LocationService {
     String apiKey = "&key=c6cba34aa4e34d51bd425f2f1fcbe184";
     String optParams = "&countrycode=LK";
 
-
     @Autowired
     LocationRepo locationRepo;
 
     @Autowired
     ArcGISAuthService arcGISAuthService;
-
 
     @Value("${esri.arcgis.org-id}")
     private String orgId;
@@ -163,6 +161,5 @@ public class LocationService {
 
         return chartWaterQualityList;
     }
-
 
 }
