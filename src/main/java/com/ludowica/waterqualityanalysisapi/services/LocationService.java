@@ -41,8 +41,10 @@ public class LocationService {
     private String accessToken = null;
 
     public Location addOrUpdate(Location location) {
-        Location savedLocation = locationRepo.save(location);
+        Location latLongLocation = getLatLong(location);
+        Location savedLocation = locationRepo.save(latLongLocation);
         prepareForArcGIS(savedLocation);
+
         return savedLocation;
     }
 
