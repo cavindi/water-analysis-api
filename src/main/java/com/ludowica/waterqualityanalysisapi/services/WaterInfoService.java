@@ -3,6 +3,7 @@ package com.ludowica.waterqualityanalysisapi.services;
 import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
+import com.ludowica.waterqualityanalysisapi.forms.ChartLine;
 import com.ludowica.waterqualityanalysisapi.forms.ChartPie;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -141,7 +143,64 @@ public class WaterInfoService {
         return waterQuality;
     }
 
+    public ChartLine getChartLine(ChartColumnFilter chartFilter) {
+
+        List<WaterInfo> waterInfoList = waterInfoRepo.
+                findAllByLocationNameAndDateBetween(chartFilter.getCity(), chartFilter.getDateStart(), chartFilter.getDateEnd())
+                .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartFilter.getCity()));
+
+        ChartLine chartLine = new ChartLine();
+
+        List<Integer> RCL = new ArrayList<>();
+        List<Integer> colour = new ArrayList<>();
+        List<Integer> turbidity = new ArrayList<>();
+        List<Integer> pH = new ArrayList<>();
+        List<Date> date = new ArrayList<>();
+
+        for (WaterInfo waterInfo : waterInfoList) {
+
+            if (6.5 <= waterInfo.getpH() && waterInfo.getpH() <= 8.5) {
+                pH.add(1);
+            } else {
+                pH.add(0);
+            }
+
+
+            if (waterInfo.getColour() <= 15) {
+                colour.add(1);
+            } else {
+                colour.add(0);
+            }
+
+
+            if (waterInfo.getTurbidity() <= 2) {
+                turbidity.add(1);
+            } else {
+                turbidity.add(0);
+            }
+
+
+            if (waterInfo.getRCL() <= 1) {
+                RCL.add(1);
+            } else {
+                RCL.add(0);
+            }
+
+            chartLine.setName(waterInfo.getLocation().getName());
+            date.add(waterInfo.getDate());
+        }
+
+        chartLine.setDate(date);
+        chartLine.setpH(pH);
+        chartLine.setColour(colour);
+        chartLine.setRCL(RCL);
+        chartLine.setTurbidity(turbidity);
+
+        return chartLine;
+    }
+
     public ChartPie getChartPie(ChartColumnFilter chartFilter) {
+
         List<WaterInfo> waterInfoList = waterInfoRepo.
                 findAllByLocationCityAndDateBetween(chartFilter.getCity(), chartFilter.getDateStart(), chartFilter.getDateEnd())
                 .orElseThrow(() -> new ResourceNotFoundException("Data not found for this City and Date :: " + chartFilter.getCity()));

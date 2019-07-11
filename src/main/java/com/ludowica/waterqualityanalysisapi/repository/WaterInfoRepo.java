@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface WaterInfoRepo extends JpaRepository<WaterInfo, Integer> {
     Optional<List<WaterInfo>> findAllByLocationCityAndDateBetween(String locationCity, Date start, Date end);
+    Optional<List<WaterInfo>> findAllByLocationNameAndDateBetween(String locationName, Date start, Date end);
 }
