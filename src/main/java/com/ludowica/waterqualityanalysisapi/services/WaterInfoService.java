@@ -143,6 +143,23 @@ public class WaterInfoService {
         return waterQuality;
     }
 
+    public String getRemark(ChartColumnFilter filter) {
+        double WQ = calculateWaterQuality(filter);
+        String result = "No Remark";
+
+        if (WQ == 100) {
+            result = "Water Quality is Good!";
+        } else if (WQ >= 75 && WQ < 100) {
+            result = "Water Quality is Average!";
+        } else if (WQ < 75 && WQ >= 50) {
+            result = "Water Quality is below average! Consult chemist for further remarks...";
+        } else {
+            result = "Poor water quality. Contact chemist immediately!";
+        }
+
+        return result;
+    }
+
     public ChartLine getChartLine(ChartColumnFilter chartFilter) {
 
         List<WaterInfo> waterInfoList = waterInfoRepo.

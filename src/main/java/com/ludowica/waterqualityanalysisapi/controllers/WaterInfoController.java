@@ -80,5 +80,10 @@ public class WaterInfoController {
         return new ResponseEntity<>(waterInfoList, HttpStatus.OK);
     }
 
+    @PostMapping("/get-remark")
+    public String getRemark(@RequestBody ChartColumnFilter chartColumnFilter) {
+        return waterInfoService.getRemark(chartColumnFilter);
+    }
+
 
 }
