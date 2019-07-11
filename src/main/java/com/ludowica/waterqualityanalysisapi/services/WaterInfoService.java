@@ -1,10 +1,7 @@
 package com.ludowica.waterqualityanalysisapi.services;
 
 import com.ludowica.waterqualityanalysisapi.exception.ResourceNotFoundException;
-import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
-import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
-import com.ludowica.waterqualityanalysisapi.forms.ChartLine;
-import com.ludowica.waterqualityanalysisapi.forms.ChartPie;
+import com.ludowica.waterqualityanalysisapi.forms.*;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.LocationRepo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
@@ -105,6 +102,7 @@ public class WaterInfoService {
 
         int total = list.size();
         ChartColumn chartColumn = new ChartColumn();
+        ChartWaterQuality chartWaterQuality = new ChartWaterQuality();
 
         for (WaterInfo waterInfo : list) {
 
@@ -139,6 +137,16 @@ public class WaterInfoService {
         double rcl = (chartColumn.getRCL() / total) * 100;
 
         double waterQuality = (ph + colour + turbidity + rcl) / 4;
+
+        if (waterQuality == 100) {
+            chartWaterQuality.setRemark("Water Quality is Good!");
+        } else if (waterQuality >= 75 && waterQuality < 100) {
+            chartWaterQuality.setRemark("Water Quality is Average!");
+        } else if (waterQuality < 75 && waterQuality >= 50) {
+            chartWaterQuality.setRemark("Water Quality is below average! Consult chemist for further remarks...");
+        } else {
+            chartWaterQuality.setRemark("Poor water quality. Contact chemist immediately!");
+        }
 
         return waterQuality;
     }
