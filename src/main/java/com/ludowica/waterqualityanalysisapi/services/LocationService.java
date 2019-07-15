@@ -63,8 +63,8 @@ public class LocationService {
             JsonObject latlong = jsonArray.get(0)
                     .getAsJsonObject().get("geometry")
                     .getAsJsonObject();
-            location.setLatitude(latlong.get("lng").getAsDouble());
-            location.setLongitude(latlong.get("lat").getAsDouble());
+            location.setLatitude(latlong.get("lat").getAsDouble());
+            location.setLongitude(latlong.get("lng").getAsDouble());
         }
 
 
@@ -109,8 +109,8 @@ public class LocationService {
         JsonObject spatialReference = new JsonObject();
         JsonObject attributes = new JsonObject();
 
-        geometry.addProperty("y", location.getLatitude());
-        geometry.addProperty("x", location.getLongitude());
+        geometry.addProperty("x", location.getLatitude());
+        geometry.addProperty("y", location.getLongitude());
 
         spatialReference.addProperty("wkid", 4326);
 

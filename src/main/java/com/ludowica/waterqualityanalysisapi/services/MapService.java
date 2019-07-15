@@ -11,11 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Service
 public class MapService {
@@ -53,8 +49,8 @@ public class MapService {
             JsonObject spatialReference = new JsonObject();
             JsonObject attributes = new JsonObject();
 
-            geometry.addProperty("y", waterInfo.getLocation().getLongitude());
-            geometry.addProperty("x", waterInfo.getLocation().getLatitude());
+            geometry.addProperty("x", waterInfo.getLocation().getLongitude());
+            geometry.addProperty("y", waterInfo.getLocation().getLatitude());
 
             spatialReference.addProperty("wkid", 4326);
 
