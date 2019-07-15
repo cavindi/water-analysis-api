@@ -41,10 +41,7 @@ public class LocationController {
 
     @PostMapping("/city-data")
     public ResponseEntity<?> getCityData(@RequestBody ChartColumnFilter chartColumnFilter) {
-
         List<ChartWaterQuality> chartWaterQualityList = locationService.getWaterQualityByLocation(chartColumnFilter);
         return new ResponseEntity<>(chartWaterQualityList, HttpStatus.OK);
-
-
     }
 }

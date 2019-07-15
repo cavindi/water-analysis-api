@@ -63,10 +63,6 @@ public class LocationService {
             JsonObject latlong = jsonArray.get(0)
                     .getAsJsonObject().get("geometry")
                     .getAsJsonObject();
-
-//            location.setLatitude(latlong.get("lat").getAsDouble());
-//            location.setLongitude(latlong.get("lng").getAsDouble());
-
             location.setLatitude(latlong.get("lng").getAsDouble());
             location.setLongitude(latlong.get("lat").getAsDouble());
         }

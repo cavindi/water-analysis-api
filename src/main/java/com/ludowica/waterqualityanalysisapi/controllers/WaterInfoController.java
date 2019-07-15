@@ -3,7 +3,6 @@ package com.ludowica.waterqualityanalysisapi.controllers;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumn;
 import com.ludowica.waterqualityanalysisapi.forms.ChartColumnFilter;
 import com.ludowica.waterqualityanalysisapi.forms.ChartLine;
-import com.ludowica.waterqualityanalysisapi.forms.ChartPie;
 import com.ludowica.waterqualityanalysisapi.models.WaterInfo;
 import com.ludowica.waterqualityanalysisapi.repository.WaterInfoRepo;
 import com.ludowica.waterqualityanalysisapi.services.WaterInfoService;
@@ -56,12 +55,6 @@ public class WaterInfoController {
         return new ResponseEntity<>(chartColumn, HttpStatus.OK);
     }
 
-    @PostMapping("/chart-pie")
-    public ResponseEntity<?> createPieChart(@RequestBody ChartColumnFilter chartColumnFilter) {
-        ChartPie chartPie = waterInfoService.getChartPie(chartColumnFilter);
-        return new ResponseEntity<>(chartPie, HttpStatus.OK);
-    }
-
     @PostMapping("/chart-line")
     public ResponseEntity<?> createLineChart(@RequestBody ChartColumnFilter chartColumnFilter) {
         ChartLine chartLine = waterInfoService.getChartLine(chartColumnFilter);
@@ -79,11 +72,4 @@ public class WaterInfoController {
         List<WaterInfo> waterInfoList = waterInfoService.getWaterInfoByDateAndCity(filter);
         return new ResponseEntity<>(waterInfoList, HttpStatus.OK);
     }
-
-    @PostMapping("/get-remark")
-    public String getRemark(@RequestBody ChartColumnFilter chartColumnFilter) {
-        return waterInfoService.getRemark(chartColumnFilter);
-    }
-
-
 }
