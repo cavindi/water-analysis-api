@@ -72,4 +72,10 @@ public class WaterInfoController {
         List<WaterInfo> waterInfoList = waterInfoService.getWaterInfoByDateAndCity(filter);
         return new ResponseEntity<>(waterInfoList, HttpStatus.OK);
     }
+
+    @PostMapping("/report-data")
+    public ResponseEntity<?> findWaterInfoByDateAndLocationName(@RequestBody ChartColumnFilter filter) {
+        List<WaterInfo> waterInfoList = waterInfoService.getWaterDateByLocationAndDate(filter);
+        return new ResponseEntity<>(waterInfoList, HttpStatus.OK);
+    }
 }
