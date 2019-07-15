@@ -109,8 +109,8 @@ public class LocationService {
         JsonObject spatialReference = new JsonObject();
         JsonObject attributes = new JsonObject();
 
-        geometry.addProperty("x", location.getLatitude());
-        geometry.addProperty("y", location.getLongitude());
+        geometry.addProperty("y", location.getLatitude());
+        geometry.addProperty("x", location.getLongitude());
 
         spatialReference.addProperty("wkid", 4326);
 
